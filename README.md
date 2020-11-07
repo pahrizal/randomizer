@@ -2,7 +2,7 @@
 is just a tool that help you to generate four (4) types of printable random objects and store them in a single file, each object will be separated by a ",". These are the 4 objects: alphabetical strings, real numbers, integers, alphanumerics.
 
 ## Backend
-the backend is writen using Python and Flask, so you need to install this first. Simply, just do this:
+the backend is writen in Python using Flask framework, so you need to install it first. Simply, just do this:
 ```
 cd backend
 pip install -r requirements.txt
