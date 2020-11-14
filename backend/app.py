@@ -1,5 +1,5 @@
 from flask import Flask, send_from_directory, Response,jsonify, request
-from helper import generate_random
+from helper import randomize_infile, randomize_inmemory
 import os
 
 app = Flask(__name__)
@@ -11,15 +11,19 @@ def apply_caching(res):
     return res
 
 @app.route("/generate")
-def generate():
-    result = generate_random(max_size=2000000)
-    
+def generate():    
+    if app.config['processor'] == 'file':
+        result = randomize_infile(max_size=2000000)
+    else:
+        result = randomize_inmemory(max_size=2000000)
     out =  {
         "state":True,
         "message":"Success",
+        "processor": app.config['processor'],
         "file_url" : f"{request.scheme}://{request.host}/result/{result['filename']}",
         "file_size": result['size'],
-        "report" : result['report']
+        "report" : result['report'],
+        "timecost": str(result['eta']),
     }
     print(out)
     return jsonify(out)

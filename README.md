@@ -7,11 +7,17 @@ the backend is writen in Python using Flask framework, so you need to install it
 cd backend
 pip install -r requirements.txt
 ```
+You can choose from two types of randomizer using process in memory (which is faster) or directly to File (will consume a lot of IO's)
 
-and then run it.
+Run it using memory processing (default)
 ```
 python run.py
 ```
+or you want to run it using File IO's
+```
+python run.py -p file
+```
+
 the backend will serve at port 5000 (flask default)
 
 ## Frontend

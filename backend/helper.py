@@ -1,6 +1,7 @@
 import random 
 import string 
 import os 
+from datetime import datetime
 
 class Randomizer:
     ALPHABET = 0
@@ -40,7 +41,29 @@ class RandomGenerator():
         return random.randint(0,999999)
 
 
-def generate_random(max_size=2000000):    
+def randomize_inmemory(max_size=2000000): 
+    start = datetime.now()   
+    report = [0,0,0,0]
+    generator = RandomGenerator()
+    filename = generator.generate_random_alphabet() + ".txt"
+    target_file = f"output/{filename}"
+    # output = open(target_file,'w')
+    output = ""
+    while True:
+        result = generator.randomize()
+        if len(output)+len(str(result['output']))<=max_size:
+            report[result['type']]+=1
+            output+=","+str(result['output'])
+        else:
+            break
+    file_handler = open(target_file,'w')
+    file_handler.write(output)
+    file_handler.close()
+    end = datetime.now()
+    return {"output": target_file, "filename": filename, "size": os.path.getsize(target_file), "report": report,"eta":end-start}
+
+def randomize_infile(max_size=2000000): 
+    start = datetime.now()   
     report = [0,0,0,0]
     generator = RandomGenerator()
     filename = generator.generate_random_alphabet() + ".txt"
@@ -48,9 +71,11 @@ def generate_random(max_size=2000000):
     output = open(target_file,'w')
     while True:
         result = generator.randomize()
-        if os.path.getsize(target_file)+len(str(result))<=max_size:
+        if os.path.getsize(target_file)+len(str(result['output']))<=max_size:
             report[result['type']]+=1
-            print(result['output'], file=output, end=",")
+            print(result['output'],end=",", file=output)
         else:
             break
-    return {"output": target_file, "filename": filename, "size": os.path.getsize(target_file), "report": report}
+    output.close()
+    end = datetime.now()
+    return {"output": target_file, "filename": filename, "size": os.path.getsize(target_file), "report": report,"eta":end-start}

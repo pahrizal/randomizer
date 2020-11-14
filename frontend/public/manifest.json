@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Randomizer",
+  "name": "Create random alphabetical strings, real numbers, integers, alphanumerics.",
   "icons": [
     {
       "src": "favicon.ico",
